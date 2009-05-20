@@ -1,18 +1,26 @@
-<idea-plugin>
-   <name>Workspaces</name>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin url="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin">
+   <name>@NAME@</name>
 
-   <description>
+   <description><![CDATA[
       This plugin enables you to create and manage named groups of files, or "workspaces", within a
       project. You can bind a name to a set of one or more files and then open/close that set of
       files as a group. You can create as many workspaces as you want and arrange them in the
       Workspaces tool window in any order you like.
-   </description>
+   ]]></description>
 
-   <version>0.9</version>
+   <version>@VERSION@</version>
 
-   <vendor>Chris Bartley | chris@chrisbartley.com | http://www.chrisbartley.com/</vendor>
+   <vendor url="http://www.chrisbartley.com/" email="chris@chrisbartley.com">Chris Bartley</vendor>
 
-   <idea-version min="3.0" max="3.0"/>
+   <change-notes><![CDATA[
+      * Workspaces menu is now accessible via ALT-K.
+      * When creating a workspace containing only one file, the default workspace name now no longer includes the extension.
+      * Updated plugin.xml file
+   ]]></change-notes>
+
+   <idea-version min="4.0" max="4.0"/>
 
    <application-components>
       <component>
@@ -33,3 +41,7 @@
       </component>
    </project-components>
 </idea-plugin>
+
+
+
+

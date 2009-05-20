@@ -79,7 +79,7 @@ public final class RemoveWorkspaceAction extends BaseWorkspaceAction
             if (confirmationResult == YES_RESPONSE)
                {
                final WorkspaceManager workspaceManager = getWorkspaceManager(project);
-               workspaceManager.remove(indicesToRemove);
+               workspaceManager.removeWorkspaces(indicesToRemove);
 
                // disable this action if there are no more workspaces
                if (workspaceManager.getWorkspaceCount() == 0)

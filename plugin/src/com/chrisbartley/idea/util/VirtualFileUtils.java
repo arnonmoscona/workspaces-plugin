@@ -42,7 +42,7 @@ public final class VirtualFileUtils
       if ((fileEditorManager != null) && (url != null))
          {
          final VirtualFile virtualFile = VirtualFileManager.getInstance().findFileByUrl(url);
-         if (virtualFile != null)
+         if ((virtualFile != null) && (fileEditorManager.isFileOpen(virtualFile)))
             {
             fileEditorManager.closeFile(virtualFile);
             }

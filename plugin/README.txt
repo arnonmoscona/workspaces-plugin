@@ -12,7 +12,7 @@ project. You can bind a name to a set of one or more files and then open/close t
 a group. You can create as many workspaces as you want and arrange them in the Workspaces tool
 window in any order you like.
 
-This plugin was tested with IntelliJ IDEA 3.0 Build 672 on Windows 2000.
+This plugin was tested with IntelliJ IDEA Build 963 on Windows 2000.
 
 ====================================================================================================
 
@@ -84,9 +84,11 @@ KNOWN ISSUES
 TO DO
 -----
 
-* Handle moved/deleted files which belong to one or more workspaces
+* Make Include/Exclude icons clearer.
+* Don't allow workspaces with duplicate names.  Perhaps prompt to replace the existing one.
+* Handle moved/deleted/renamed files which belong to one or more workspaces.
 * Consider implementing an action which is similar to "Close All Workspaces Except" but would
-  also close all non-workspaced files too (basically a shortcut for doing "Close All Workspaces
+  also close all non-workspaced files (basically a shortcut for doing "Close All Workspaces
   Except" followed by "Close All Non-Workspace Files").  I'm not sure what to call this, though.
   Possibly "Close All Except", but that might be confusing.  Suggestions are welcome!  :D
 * Provide docs on pinning (especially the subtle problems that arise when pinning/unpinning upon
@@ -103,6 +105,21 @@ TO DO
 
 VERSION HISTORY
 ---------------
+
+v 0.12  (2003.11.07)
+
+   - Workspaces menu is now accessible via ALT-K.
+   - When creating a workspace containing only one file, the default workspace name now no longer
+     includes the extension.
+   - Updated plugin.xml file
+
+v 0.11  (2003.10.29)
+
+   - converted for 957 API [Vince Mallet]
+
+v 0.10  (2003.09.24)
+
+   - converted for 929 API [Sven Krause]
 
 v 0.9   (2002.11.05)
 

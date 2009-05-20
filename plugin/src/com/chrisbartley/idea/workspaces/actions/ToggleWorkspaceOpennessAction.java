@@ -11,22 +11,24 @@ import com.intellij.openapi.project.Project;
  */
 public final class ToggleWorkspaceOpennessAction extends BaseWorkspaceAction
    {
+   private final Project project;
    private final Workspace workspace;
 
-   public ToggleWorkspaceOpennessAction(final Workspace workspace)
+   public ToggleWorkspaceOpennessAction(final Project project, final Workspace workspace)
       {
       super(workspace.getName(), "Open the '" + workspace.getName() + "' workspace", null);
+      this.project = project;
       this.workspace = workspace;
       }
 
    protected String getActionRegistrationId()
       {
-      return super.getActionRegistrationId() + "." + workspace.getName();
+      return "ToggleWorkspaceOpenClosed." + project.getProjectFile().getNameWithoutExtension() + "." + workspace.getName();
       }
 
    public void actionPerformed(final AnActionEvent event)
       {
-      final Project project = getProject(event);
+      //final Project project = getProject(event);
       if (project != null)
          {
          getWorkspaceManager(project).toggleWorkspaceOpenness(workspace);
@@ -35,7 +37,7 @@ public final class ToggleWorkspaceOpennessAction extends BaseWorkspaceAction
 
    public void update(final AnActionEvent event)
       {
-      final Project project = getProject(event);
+      //final Project project = getProject(event);
       if (project != null)
          {
          final WorkspaceState workspaceState = workspace.getState(FileEditorManager.getInstance(project));

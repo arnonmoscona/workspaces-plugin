@@ -10,6 +10,7 @@ import java.util.ListIterator;
 import java.util.Set;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import com.chrisbartley.idea.actions.RegisterableAction;
 import com.chrisbartley.idea.util.ReorderableListModel;
 import com.chrisbartley.idea.workspaces.actions.CloseAllWorkspacesExceptThisAction;
 import com.chrisbartley.idea.workspaces.actions.ConfigureWorkspaceAction;
@@ -44,6 +45,7 @@ public final class WorkspaceManager implements ProjectComponent, JDOMExternaliza
    private final Project project;
    private ReorderableListModel workspacesModel;
    private final JList jList = new JList();
+   private final List toggleWorkspaceOpennessActions = new ArrayList();
 
    public WorkspaceManager(final Project project)
       {
@@ -78,11 +80,13 @@ public final class WorkspaceManager implements ProjectComponent, JDOMExternaliza
          {
          showHideToolWindow(true);
          }
+      buildActionsForMutableActionGroups();
       }
 
    public void projectClosed()
       {
       showHideToolWindow(false);
+      unregisterActionsForMutableActionGroups();
       }
 
    public void updateImplicitAutoPinningAndUnpinning()
@@ -169,6 +173,117 @@ public final class WorkspaceManager implements ProjectComponent, JDOMExternaliza
       if ((name != null) && (!urls.isEmpty()))
          {
          workspacesModel.add(new Workspace(name, urls, workspacesConfiguration.isAutoPin() && workspacesConfiguration.isAutoPinUponCreateWorkspace()));
+         buildActionsForMutableActionGroups();
+         }
+      }
+
+   public void removeWorkspaces(final int[] indicesToRemove)
+      {
+      final int[] selectedIndices = jList.getSelectedIndices();
+
+      // remove all selected indices (in reverse order)
+      for (int i = indicesToRemove.length - 1; i >= 0; i--)
+         {
+         workspacesModel.remove(indicesToRemove[i]);
+         }
+
+      buildActionsForMutableActionGroups();
+
+      // now update the selection
+      if (workspacesModel.isEmpty())
+         {
+         jList.getSelectionModel().clearSelection();
+         }
+      else
+         {
+         if ((selectedIndices != null) && (selectedIndices.length > 0))
+            {
+            // the selected indices might not equal the indices to remove if removal is not performed
+            // via the tool window.
+            if (selectedIndices.equals(indicesToRemove))
+               {
+               int firstSelectedIndex = selectedIndices[0];
+               if (firstSelectedIndex == workspacesModel.size())
+                  {
+                  firstSelectedIndex--;
+                  }
+               jList.setSelectedIndex(firstSelectedIndex);
+               }
+            else
+               {
+               // make a copy of the array of indices to remove in case the client doesn't want the order changed
+               final int[] indicesToRemoveCopy = new int[indicesToRemove.length];
+               System.arraycopy(indicesToRemove, 0, indicesToRemoveCopy, 0, indicesToRemove.length);
+
+               // figure out which of the selected indices are not being removed and decrement their
+               // indices appropriately
+               Arrays.sort(indicesToRemoveCopy);
+               int sizeOfNewSelectedIndicesArray = 0;
+               for (int i = 0; i < selectedIndices.length; i++)
+                  {
+                  final int selectedIndex = selectedIndices[i];
+                  final int pos = Arrays.binarySearch(indicesToRemoveCopy, selectedIndex);
+                  if (pos >= 0)
+                     {
+                     selectedIndices[i] = -1;   // flag this index as having been removed from the list
+                     }
+                  else
+                     {
+                     // decrement the index appropriately (figure out how many indices to remove are less than this one)
+                     final int numberOfSmallerIndices = -(pos + 1);
+                     selectedIndices[i] -= numberOfSmallerIndices;
+                     sizeOfNewSelectedIndicesArray++;
+                     }
+                  }
+
+               // weed out all the removed selected indices, and then set the new selection
+               if (sizeOfNewSelectedIndicesArray > 0)
+                  {
+                  final int[] newSelectedIndeces = new int[sizeOfNewSelectedIndicesArray];
+                  int currentPos = 0;
+                  for (int i = 0; i < selectedIndices.length; i++)
+                     {
+                     if (selectedIndices[i] != -1)
+                        {
+                        newSelectedIndeces[currentPos++] = selectedIndices[i];
+                        }
+                     }
+                  jList.setSelectedIndices(newSelectedIndeces);
+                  }
+               }
+            }
+         }
+      }
+
+   private void buildActionsForMutableActionGroups()
+      {
+      // update the pinned state
+      updateImplicitAutoPinningAndUnpinning();
+
+      // unregister all
+      unregisterActionsForMutableActionGroups();
+
+      // build the new list of actions
+      toggleWorkspaceOpennessActions.clear();
+      for (final ListIterator listIterator = workspacesModel.listIterator(); listIterator.hasNext();)
+         {
+         final ToggleWorkspaceOpennessAction toggleWorkspaceOpennessAction = new ToggleWorkspaceOpennessAction(project, (Workspace)listIterator.next());
+         toggleWorkspaceOpennessAction.register();
+         toggleWorkspaceOpennessActions.add(toggleWorkspaceOpennessAction);
+         }
+      }
+
+   private void unregisterActionsForMutableActionGroups()
+      {
+      unregisterActions(toggleWorkspaceOpennessActions);
+      }
+
+   private void unregisterActions(final List actions)
+      {
+      for (final ListIterator listIterator = actions.listIterator(); listIterator.hasNext();)
+         {
+         final RegisterableAction action = (RegisterableAction)listIterator.next();
+         action.unregister();
          }
       }
 
@@ -359,17 +474,18 @@ public final class WorkspaceManager implements ProjectComponent, JDOMExternaliza
 
    public List getToggleWorkspaceOpennessActions()
       {
-      // update the pinned state
-      updateImplicitAutoPinningAndUnpinning();
-
-      // build and return the list of actions
-      final List actions = new ArrayList();
-      for (final ListIterator listIterator = workspacesModel.listIterator(); listIterator.hasNext();)
-         {
-         actions.add(new ToggleWorkspaceOpennessAction((Workspace)listIterator.next()));
-         }
-
-      return actions;
+      //// update the pinned state
+      //updateImplicitAutoPinningAndUnpinning();
+      //
+      //// build and return the list of actions
+      //final List actions = new ArrayList();
+      //for (final ListIterator listIterator = workspacesModel.listIterator(); listIterator.hasNext();)
+      //   {
+      //   actions.add(new ToggleWorkspaceOpennessAction((Workspace)listIterator.next()));
+      //   }
+      //
+      //return actions;
+      return toggleWorkspaceOpennessActions;
       }
 
    public List getCloseAllWorkspacesExceptThisActions()
@@ -427,81 +543,5 @@ public final class WorkspaceManager implements ProjectComponent, JDOMExternaliza
          return workspacesModel.indexOf(workspace);
          }
       return -1;
-      }
-
-   public void remove(final int[] indicesToRemove)
-      {
-      final int[] selectedIndices = jList.getSelectedIndices();
-
-      // remove all selected indices (in reverse order)
-      for (int i = indicesToRemove.length - 1; i >= 0; i--)
-         {
-         workspacesModel.remove(indicesToRemove[i]);
-         }
-
-      // now update the selection
-      if (workspacesModel.isEmpty())
-         {
-         jList.getSelectionModel().clearSelection();
-         }
-      else
-         {
-         if ((selectedIndices != null) && (selectedIndices.length > 0))
-            {
-            // the selected indices might not equal the indices to remove if removal is not performed
-            // via the tool window.
-            if (selectedIndices.equals(indicesToRemove))
-               {
-               int firstSelectedIndex = selectedIndices[0];
-               if (firstSelectedIndex == workspacesModel.size())
-                  {
-                  firstSelectedIndex--;
-                  }
-               jList.setSelectedIndex(firstSelectedIndex);
-               }
-            else
-               {
-               // make a copy of the array of indices to remove in case the client doesn't want the order changed
-               final int[] indicesToRemoveCopy = new int[indicesToRemove.length];
-               System.arraycopy(indicesToRemove, 0, indicesToRemoveCopy, 0, indicesToRemove.length);
-
-               // figure out which of the selected indices are not being removed and decrement their
-               // indices appropriately
-               Arrays.sort(indicesToRemoveCopy);
-               int sizeOfNewSelectedIndicesArray = 0;
-               for (int i = 0; i < selectedIndices.length; i++)
-                  {
-                  final int selectedIndex = selectedIndices[i];
-                  final int pos = Arrays.binarySearch(indicesToRemoveCopy, selectedIndex);
-                  if (pos >= 0)
-                     {
-                     selectedIndices[i] = -1;   // flag this index as having been removed from the list
-                     }
-                  else
-                     {
-                     // decrement the index appropriately (figure out how many indices to remove are less than this one)
-                     final int numberOfSmallerIndices = -(pos + 1);
-                     selectedIndices[i] -= numberOfSmallerIndices;
-                     sizeOfNewSelectedIndicesArray++;
-                     }
-                  }
-
-               // weed out all the removed selected indices, and then set the new selection
-               if (sizeOfNewSelectedIndicesArray > 0)
-                  {
-                  final int[] newSelectedIndeces = new int[sizeOfNewSelectedIndicesArray];
-                  int currentPos = 0;
-                  for (int i = 0; i < selectedIndices.length; i++)
-                     {
-                     if (selectedIndices[i] != -1)
-                        {
-                        newSelectedIndeces[currentPos++] = selectedIndices[i];
-                        }
-                     }
-                  jList.setSelectedIndices(newSelectedIndeces);
-                  }
-               }
-            }
-         }
       }
    }

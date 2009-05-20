@@ -66,7 +66,7 @@ final class WorkspacesToolWindowListCellRenderer extends JPanel implements ListC
       numFilesArea.setText(String.valueOf(workspaceState.getNumFiles()));
       isPinnedArea.setIcon(workspaceState.getPinnedStatusIcon());
       isOpenArea.setIcon(workspaceState.getOpenedStatusIcon());
-      isActiveArea.setIcon(workspace.contains(fileEditorManager.getSelectedFile()) ? Icons.ACTIVE_WORKSPACE : Icons.INACTIVE_WORKSPACE);
+      isActiveArea.setIcon(workspace.contains(fileEditorManager.getSelectedFiles()) ? Icons.ACTIVE_WORKSPACE : Icons.INACTIVE_WORKSPACE);
 
       return this;
       }

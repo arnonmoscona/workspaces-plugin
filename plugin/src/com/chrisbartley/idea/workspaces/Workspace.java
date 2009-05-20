@@ -112,7 +112,7 @@ public final class Workspace implements JDOMExternalizable
    private void openFile(final String url, final VirtualFileManager virtualFileManager, final FileEditorManager fileEditorManager)
       {
       final VirtualFile virtualFile = virtualFileManager.findFileByUrl(url);
-      fileEditorManager.openFile(new OpenFileDescriptor(virtualFile), ScrollType.MAKE_VISIBLE, false);
+      fileEditorManager.openFile(virtualFile, false);
       }
 
    /** Closes all files in this workspace, except those in the given {@link Set} of URLs */
@@ -132,12 +132,18 @@ public final class Workspace implements JDOMExternalizable
          }
       }
 
-   public boolean contains(final VirtualFile fileToCheck)
+   public boolean contains(final VirtualFile[] filesToCheck)
       {
-      if (fileToCheck != null)
+      if ((filesToCheck != null) && (filesToCheck.length != 0))
          {
          final Set fileUrlsSet = new HashSet(fileUrls);
-         return fileUrlsSet.contains(fileToCheck.getUrl());
+         for (int i = 0; i < filesToCheck.length; i++)
+            {
+            if (fileUrlsSet.contains(filesToCheck[i].getUrl()))
+               {
+               return true;
+               }
+            }
          }
       return false;
       }

@@ -10,10 +10,10 @@ public final class Icons
    {
    public static final Icon WORKSPACES = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/workspace.png"));
 
-   public static final Icon INCLUDED = new ImageIcon(Icons.class.getResource("/actions/check.png"));
+   public static final Icon INCLUDED = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/check.png"));
    public static final Icon EXCLUDED = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/noCheck.png"));
 
-   public static final Icon OPENED = new ImageIcon(Icons.class.getResource("/actions/check.png"));
+   public static final Icon OPENED = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/check.png"));
    public static final Icon PARTIALLY_OPENED = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/greyCheck.png"));
    public static final Icon UNOPENED = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/noCheck.png"));
 

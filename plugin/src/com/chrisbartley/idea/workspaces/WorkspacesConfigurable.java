@@ -34,7 +34,7 @@ public final class WorkspacesConfigurable implements ApplicationComponent, Confi
    private WorkspacesConfiguration workspacesConfiguration;
    private WorkspacesConfigurationPanel configurationPanel;
 
-   private final DefaultActionGroup workspacesMenu = new DefaultActionGroup("Workspaces", false);
+   private DefaultActionGroup workspacesMenu = new DefaultActionGroup("Wor_kspaces", false);
    private final MutableActionGroup toggleWorkspaceOpennessActionGroup = new MutableActionGroup(new ToggleWorkspaceOpennessActionGroup());
    private final MutableActionGroup closeAllWorkspacesExceptThisActionGroup = new MutableActionGroup(new CloseAllWorkspacesExceptThisActionGroup(), "Close All Workspaces Except", true);
 
@@ -179,8 +179,8 @@ public final class WorkspacesConfigurable implements ApplicationComponent, Confi
       final Project[] projects = ProjectManager.getInstance().getOpenProjects();
       for (int i = 0; i < projects.length; i++)
          {
-         Project project = projects[i];
-         WorkspaceManager workspaceManager = (WorkspaceManager)project.getComponent(WorkspaceManager.class);
+         final Project project = projects[i];
+         final WorkspaceManager workspaceManager = (WorkspaceManager)project.getComponent(WorkspaceManager.class);
          workspaceManager.showHideToolWindow(show);
          }
       }

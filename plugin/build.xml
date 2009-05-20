@@ -5,7 +5,7 @@
    <!-- Initialization                                                                           -->
    <!-- ======================================================================================== -->
    <property name="name" value="Workspaces"/>
-   <property name="version" value="0.9"/>
+   <property name="version" value="0.12"/>
    <property name="idea.home" value="c:\idea"/>
    <property name="output.dir" value="output"/>
    <property name="dist.dir" value="dist"/>

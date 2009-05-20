@@ -68,7 +68,7 @@ final class CreateWorkspaceDialog extends DialogWrapper
          final String url = (String)candidateFileUrls.get(0);
          final VirtualFileManager virtualFileManager = VirtualFileManager.getInstance();
          final VirtualFile virtualFile = virtualFileManager.findFileByUrl(url);
-         return virtualFile.getName();
+         return virtualFile.getNameWithoutExtension();
          }
       return "Untitled";
       }
