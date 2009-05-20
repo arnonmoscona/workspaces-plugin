@@ -12,7 +12,7 @@ project. You can bind a name to a set of one or more files and then open/close t
 a group. You can create as many workspaces as you want and arrange them in the Workspaces tool
 window in any order you like.
 
-This plugin was tested with IntelliJ IDEA Build 963 on Windows 2000.
+This plugin was tested with IntelliJ IDEA Build 1050 on Windows 2000.
 
 ====================================================================================================
 
@@ -105,6 +105,10 @@ TO DO
 
 VERSION HISTORY
 ---------------
+
+v 0.13  (2003.12.31)
+
+   - Migrated to 1050's API [Vince Mallet]
 
 v 0.12  (2003.11.07)
 

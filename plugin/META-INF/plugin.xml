@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin">
-   <name>@NAME@</name>
+   <name>Workspaces</name>
 
    <description><![CDATA[
       This plugin enables you to create and manage named groups of files, or "workspaces", within a
@@ -10,14 +10,12 @@
       Workspaces tool window in any order you like.
    ]]></description>
 
-   <version>@VERSION@</version>
+   <version>0.13</version>
 
    <vendor url="http://www.chrisbartley.com/" email="chris@chrisbartley.com">Chris Bartley</vendor>
 
    <change-notes><![CDATA[
-      * Workspaces menu is now accessible via ALT-K.
-      * When creating a workspace containing only one file, the default workspace name now no longer includes the extension.
-      * Updated plugin.xml file
+      * Migrated to 1050's API [Vince Mallet]
    ]]></change-notes>
 
    <idea-version min="4.0" max="4.0"/>

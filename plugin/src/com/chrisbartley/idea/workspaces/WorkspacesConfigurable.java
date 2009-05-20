@@ -15,6 +15,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Anchor;
 import com.intellij.openapi.actionSystem.Constraints;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.options.Configurable;
@@ -179,8 +180,8 @@ public final class WorkspacesConfigurable implements ApplicationComponent, Confi
       final Project[] projects = ProjectManager.getInstance().getOpenProjects();
       for (int i = 0; i < projects.length; i++)
          {
-         final Project project = projects[i];
-         final WorkspaceManager workspaceManager = (WorkspaceManager)project.getComponent(WorkspaceManager.class);
+         Project project = projects[i];
+         WorkspaceManager workspaceManager = (WorkspaceManager)project.getComponent(WorkspaceManager.class);
          workspaceManager.showHideToolWindow(show);
          }
       }
