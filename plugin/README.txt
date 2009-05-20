@@ -105,6 +105,12 @@ TO DO
 
 VERSION HISTORY
 ---------------
+v 0.14  (2004.09.16) [John De Lelo www.delware.com]
+
+   - Added a toolbar button on the Workspace tool window to allow adding the active editor file 
+      to the workspace.
+   - Added menu item to Workspaces Main Menu to allow adding active editor file to specfic workspace
+   - Added Workspace menu to the editor right-click menu.
 
 v 0.13  (2003.12.31)
 

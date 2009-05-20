@@ -3,6 +3,7 @@ package com.chrisbartley.idea.workspaces;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.JComponent;
+
 import com.chrisbartley.idea.actions.MutableActionGroup;
 import com.chrisbartley.idea.actions.RegisterableAction;
 import com.chrisbartley.idea.workspaces.actions.CloseAllNonWorkspaceFilesAction;
@@ -26,213 +27,197 @@ import com.intellij.openapi.project.ProjectManager;
 /**
  * @author <a href="http://www.intellij.org/twiki/bin/view/Main/ChrisBartley">Chris Bartley</a>
  */
-public final class WorkspacesConfigurable implements ApplicationComponent, Configurable
-   {
-   private static final String COMPONENT_NAME = "WorkspacesConfigurable";
-   private static final String DISPLAY_NAME = "Workspaces";
-   private static final Constraints WORKSPACES_MENU_PLACEMENT = new Constraints(Anchor.BEFORE, "HelpMenu");
+public final class WorkspacesConfigurable implements ApplicationComponent, Configurable {
+    private static final String COMPONENT_NAME = "WorkspacesConfigurable";
+    private static final String DISPLAY_NAME = "Workspaces";
+    private static final Constraints WORKSPACES_MENU_PLACEMENT = new Constraints(Anchor.BEFORE, "HelpMenu");
 
-   private WorkspacesConfiguration workspacesConfiguration;
-   private WorkspacesConfigurationPanel configurationPanel;
+    private WorkspacesConfiguration workspacesConfiguration;
+    private WorkspacesConfigurationPanel configurationPanel;
 
-   private DefaultActionGroup workspacesMenu = new DefaultActionGroup("Wor_kspaces", false);
-   private final MutableActionGroup toggleWorkspaceOpennessActionGroup = new MutableActionGroup(new ToggleWorkspaceOpennessActionGroup());
-   private final MutableActionGroup closeAllWorkspacesExceptThisActionGroup = new MutableActionGroup(new CloseAllWorkspacesExceptThisActionGroup(), "Close All Workspaces Except", true);
+        private DefaultActionGroup workspacesMenu = new DefaultActionGroup("Wor_kspaces", false);
 
-   private final MutableActionGroup togglePinActionGroup = new MutableActionGroup(new ToggleWorkspacePinActionGroup(), "Toggle Pin", true, Icons.PINNED);
-   private final MutableActionGroup configureActionGroup = new MutableActionGroup(new ConfigureWorkspaceActionGroup(), "Properties", true, Icons.CONFIGURE_WORKSPACE);
-   private final MutableActionGroup removeActionGroup = new MutableActionGroup(new RemoveWorkspaceActionGroup(), "Remove", true);
+    private final MutableActionGroup toggleWorkspaceOpennessActionGroup = new MutableActionGroup(new ToggleWorkspaceOpennessActionGroup());
+    private final MutableActionGroup closeAllWorkspacesExceptThisActionGroup = new MutableActionGroup(new CloseAllWorkspacesExceptThisActionGroup(), "Close All Workspaces Except", true);
 
-   private final RegisterableAction createWorkspaceAction = new CreateWorkspaceAction();
-   private final RegisterableAction closeAllWorkspacesAction = new CloseAllWorkspacesAction();
-   private final RegisterableAction closeAllNonWorkspaceFilesAction = new CloseAllNonWorkspaceFilesAction();
+    private final MutableActionGroup addCurrentEditorToWorkspaceGroup = new MutableActionGroup(new AddCurrentEditorToWorkspaceActionGroup(), "Add Currently Selected File to ", true);
 
-   public WorkspacesConfigurable()
-      {
-      super();
-      }
+    private final MutableActionGroup togglePinActionGroup = new MutableActionGroup(new ToggleWorkspacePinActionGroup(), "Toggle Pin", true, Icons.PINNED);
+    private final MutableActionGroup configureActionGroup = new MutableActionGroup(new ConfigureWorkspaceActionGroup(), "Properties", true, Icons.CONFIGURE_WORKSPACE);
+    private final MutableActionGroup removeActionGroup = new MutableActionGroup(new RemoveWorkspaceActionGroup(), "Remove", true);
 
-   public String getComponentName()
-      {
-      return COMPONENT_NAME;
-      }
+    private final RegisterableAction createWorkspaceAction = new CreateWorkspaceAction();
+    private final RegisterableAction closeAllWorkspacesAction = new CloseAllWorkspacesAction();
+    private final RegisterableAction closeAllNonWorkspaceFilesAction = new CloseAllNonWorkspaceFilesAction();
 
-   public void initComponent()
-      {
-      // load the configuration
-      workspacesConfiguration = (WorkspacesConfiguration)ApplicationManager.getApplication().getComponent(WorkspacesConfiguration.class);
+    public WorkspacesConfigurable() {
+        super();
+    }
 
-      // build the Workspaces menu
-      workspacesMenu.add(toggleWorkspaceOpennessActionGroup);
-      workspacesMenu.addSeparator();
-      workspacesMenu.add(closeAllWorkspacesExceptThisActionGroup);
-      workspacesMenu.add(closeAllWorkspacesAction);
-      workspacesMenu.add(closeAllNonWorkspaceFilesAction);
-      workspacesMenu.addSeparator();
-      workspacesMenu.add(togglePinActionGroup);
-      workspacesMenu.add(configureActionGroup);
-      workspacesMenu.addSeparator();
-      workspacesMenu.add(removeActionGroup);
-      workspacesMenu.add(createWorkspaceAction);
+    public String getComponentName() {
+        return COMPONENT_NAME;
+    }
 
-      // register the Workspace actions
-      createWorkspaceAction.register();
-      closeAllWorkspacesAction.register();
-      closeAllNonWorkspaceFilesAction.register();
+    public void initComponent() {
+        // load the configuration
+        workspacesConfiguration = (WorkspacesConfiguration) ApplicationManager.getApplication().getComponent(WorkspacesConfiguration.class);
 
-      // show the menu
-      if (workspacesConfiguration.isDisplayMainMenuUI())
-         {
-         showHideWorkspacesMenu(true);
-         }
-      }
+        
+        // build the Workspaces menu
+        workspacesMenu.add(toggleWorkspaceOpennessActionGroup);
+        workspacesMenu.addSeparator();
+        workspacesMenu.add(closeAllWorkspacesExceptThisActionGroup);
+        workspacesMenu.add(closeAllWorkspacesAction);
+        workspacesMenu.add(closeAllNonWorkspaceFilesAction);
+        workspacesMenu.addSeparator();
+        workspacesMenu.add(addCurrentEditorToWorkspaceGroup);
+        workspacesMenu.addSeparator();
+        workspacesMenu.add(togglePinActionGroup);
+        workspacesMenu.add(configureActionGroup);
+        workspacesMenu.addSeparator();
+        workspacesMenu.add(removeActionGroup);
+        workspacesMenu.add(createWorkspaceAction);
 
-   public void disposeComponent()
-      {
-      // unregister the Workspace actions
-      createWorkspaceAction.unregister();
-      closeAllWorkspacesAction.unregister();
-      closeAllNonWorkspaceFilesAction.unregister();
+        // register the Workspace actions
+        createWorkspaceAction.register();
+        closeAllWorkspacesAction.register();
+        closeAllNonWorkspaceFilesAction.register();
 
-      // empty the groups
-      toggleWorkspaceOpennessActionGroup.removeAll();
-      closeAllWorkspacesExceptThisActionGroup.removeAll();
-      togglePinActionGroup.removeAll();
-      configureActionGroup.removeAll();
-      removeActionGroup.removeAll();
+        // show the menu
+        if (workspacesConfiguration.isDisplayMainMenuUI()) {
+            showHideWorkspacesMenu(true);
+        }
+    }
 
-      // empty the menu
-      workspacesMenu.removeAll();
+    public void disposeComponent() {
+        // unregister the Workspace actions
+        createWorkspaceAction.unregister();
+        closeAllWorkspacesAction.unregister();
+        closeAllNonWorkspaceFilesAction.unregister();
 
-      // hide the menu
-      if (workspacesConfiguration.isDisplayMainMenuUI())
-         {
-         showHideWorkspacesMenu(false);
-         }
-      }
+        // empty the groups
+        toggleWorkspaceOpennessActionGroup.removeAll();
+        closeAllWorkspacesExceptThisActionGroup.removeAll();
+        togglePinActionGroup.removeAll();
+        configureActionGroup.removeAll();
+        removeActionGroup.removeAll();
 
-   public String getDisplayName()
-      {
-      return DISPLAY_NAME;
-      }
+        // empty the menu
+        workspacesMenu.removeAll();
 
-   public Icon getIcon()
-      {
-      return Icons.WORKSPACES_CONFIGURABLE;
-      }
+        // hide the menu
+        if (workspacesConfiguration.isDisplayMainMenuUI()) {
+            showHideWorkspacesMenu(false);
+        }
+    }
 
-   public String getHelpTopic()
-      {
-      return null;
-      }
+    public String getDisplayName() {
+        return DISPLAY_NAME;
+    }
 
-   public JComponent createComponent()
-      {
-      configurationPanel = new WorkspacesConfigurationPanel();
-      return configurationPanel;
-      }
+    public Icon getIcon() {
+        return Icons.WORKSPACES_CONFIGURABLE;
+    }
 
-   public boolean isModified()
-      {
-      final WorkspacesConfiguration configuration = new WorkspacesConfiguration();
-      saveToConfiguration(configuration);
-      return !configuration.equals(workspacesConfiguration);
-      }
+    public String getHelpTopic() {
+        return null;
+    }
 
-   public void apply() throws ConfigurationException
-      {
-      saveToConfiguration(workspacesConfiguration);
-      showHideWorkspacesMenu(workspacesConfiguration.isDisplayMainMenuUI());
-      showHideToolWindow(workspacesConfiguration.isDisplayToolWindowUI());
-      }
+    public JComponent createComponent() {
+        configurationPanel = new WorkspacesConfigurationPanel();
+        return configurationPanel;
+    }
 
-   private void saveToConfiguration(final WorkspacesConfiguration configuration)
-      {
-      configurationPanel.copyConfigurationTo(configuration);
-      }
+    public boolean isModified() {
+        final WorkspacesConfiguration configuration = new WorkspacesConfiguration();
+        saveToConfiguration(configuration);
+        return !configuration.equals(workspacesConfiguration);
+    }
 
-   public void reset()
-      {
-      configurationPanel.copyConfigurationFrom(workspacesConfiguration);
-      }
+    public void apply() throws ConfigurationException {
+        saveToConfiguration(workspacesConfiguration);
+        showHideWorkspacesMenu(workspacesConfiguration.isDisplayMainMenuUI());
+        showHideToolWindow(workspacesConfiguration.isDisplayToolWindowUI());
+    }
 
-   public void disposeUIResources()
-      {
-      configurationPanel = null;
-      }
+    private void saveToConfiguration(final WorkspacesConfiguration configuration) {
+        configurationPanel.copyConfigurationTo(configuration);
+    }
 
-   private void showHideWorkspacesMenu(final boolean show)
-      {
-      final DefaultActionGroup mainMenu = (DefaultActionGroup)ActionManager.getInstance().getAction(ActionPlaces.MAIN_MENU);
+    public void reset() {
+        configurationPanel.copyConfigurationFrom(workspacesConfiguration);
+    }
 
-      // remove the Workspaces menu from the main menu
-      mainMenu.remove(workspacesMenu);
+    public void disposeUIResources() {
+        configurationPanel = null;
+    }
 
-      if (show)
-         {
-         // add the Workspaces menu to the main menu
-         mainMenu.add(workspacesMenu, WORKSPACES_MENU_PLACEMENT);
-         }
-      }
+    private void showHideWorkspacesMenu(final boolean show) {
+        final DefaultActionGroup mainMenu = (DefaultActionGroup) ActionManager.getInstance().getAction(ActionPlaces.MAIN_MENU);
 
-   private void showHideToolWindow(final boolean show)
-      {
-      final Project[] projects = ProjectManager.getInstance().getOpenProjects();
-      for (int i = 0; i < projects.length; i++)
-         {
-         Project project = projects[i];
-         WorkspaceManager workspaceManager = (WorkspaceManager)project.getComponent(WorkspaceManager.class);
-         workspaceManager.showHideToolWindow(show);
-         }
-      }
+        // remove the Workspaces menu from the main menu
+        mainMenu.remove(workspacesMenu);
 
-   public RegisterableAction getCloseAllWorkspacesAction()
-      {
-      return closeAllWorkspacesAction;
-      }
+        if (show) {
+            // add the Workspaces menu to the main menu
+            mainMenu.add(workspacesMenu, WORKSPACES_MENU_PLACEMENT);
+            ActionManager.getInstance().registerAction("Workspaces.MainMenu", workspacesMenu);
+        }
+    }
 
-   public RegisterableAction getCloseAllNonWorkspaceFilesAction()
-      {
-      return closeAllNonWorkspaceFilesAction;
-      }
+    public DefaultActionGroup getWorkSpacemenu(){
+        return workspacesMenu;
+    }
+    private void showHideToolWindow(final boolean show) {
+        final Project[] projects = ProjectManager.getInstance().getOpenProjects();
+        for (int i = 0; i < projects.length; i++) {
+            Project project = projects[i];
+            WorkspaceManager workspaceManager = (WorkspaceManager) project.getComponent(WorkspaceManager.class);
+            workspaceManager.showHideToolWindow(show);
+        }
+    }
 
-   private static final class ToggleWorkspaceOpennessActionGroup extends WorkspaceMutableActionGroupStrategy
-      {
-      public List getActions(final AnActionEvent event)
-         {
-         return getWorkspaceManager(event).getToggleWorkspaceOpennessActions();
-         }
-      }
+    public RegisterableAction getCloseAllWorkspacesAction() {
+        return closeAllWorkspacesAction;
+    }
 
-   private static final class CloseAllWorkspacesExceptThisActionGroup extends WorkspaceMutableActionGroupStrategy
-      {
-      public List getActions(final AnActionEvent event)
-         {
-         return getWorkspaceManager(event).getCloseAllWorkspacesExceptThisActions();
-         }
-      }
+    public RegisterableAction getCloseAllNonWorkspaceFilesAction() {
+        return closeAllNonWorkspaceFilesAction;
+    }
 
-   private static final class ToggleWorkspacePinActionGroup extends WorkspaceMutableActionGroupStrategy
-      {
-      public List getActions(final AnActionEvent event)
-         {
-         return getWorkspaceManager(event).getToggleWorkspacePinActions();
-         }
-      }
+    public static final class ToggleWorkspaceOpennessActionGroup extends WorkspaceMutableActionGroupStrategy {
+        public List getActions(final AnActionEvent event) {
+            return getWorkspaceManager(event).getToggleWorkspaceOpennessActions();
+        }
+    }
 
-   private static final class ConfigureWorkspaceActionGroup extends WorkspaceMutableActionGroupStrategy
-      {
-      public List getActions(final AnActionEvent event)
-         {
-         return getWorkspaceManager(event).getConfigureWorkspaceActions();
-         }
-      }
+    public static final class CloseAllWorkspacesExceptThisActionGroup extends WorkspaceMutableActionGroupStrategy {
+        public List getActions(final AnActionEvent event) {
+            return getWorkspaceManager(event).getCloseAllWorkspacesExceptThisActions();
+        }
+    }
 
-   private static final class RemoveWorkspaceActionGroup extends WorkspaceMutableActionGroupStrategy
-      {
-      public List getActions(final AnActionEvent event)
-         {
-         return getWorkspaceManager(event).getRemoveWorkspaceActions();
-         }
-      }
-   }
+    public static final class AddCurrentEditorToWorkspaceActionGroup extends WorkspaceMutableActionGroupStrategy {
+        public List getActions(final AnActionEvent event) {
+            return getWorkspaceManager(event).getAddCurrentEditorActions();
+        }
+    }
+
+    public static final class ToggleWorkspacePinActionGroup extends WorkspaceMutableActionGroupStrategy {
+        public List getActions(final AnActionEvent event) {
+            return getWorkspaceManager(event).getToggleWorkspacePinActions();
+        }
+    }
+
+    public static final class ConfigureWorkspaceActionGroup extends WorkspaceMutableActionGroupStrategy {
+        public List getActions(final AnActionEvent event) {
+            return getWorkspaceManager(event).getConfigureWorkspaceActions();
+        }
+    }
+
+    public static final class RemoveWorkspaceActionGroup extends WorkspaceMutableActionGroupStrategy {
+        public List getActions(final AnActionEvent event) {
+            return getWorkspaceManager(event).getRemoveWorkspaceActions();
+        }
+    }
+}

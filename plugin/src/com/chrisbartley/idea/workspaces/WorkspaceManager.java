@@ -13,11 +13,7 @@ import javax.swing.ListSelectionModel;
 import com.chrisbartley.idea.actions.RegisterableAction;
 import com.chrisbartley.idea.util.ReorderableListModel;
 import com.chrisbartley.idea.util.JDOMExternalizableList;
-import com.chrisbartley.idea.workspaces.actions.CloseAllWorkspacesExceptThisAction;
-import com.chrisbartley.idea.workspaces.actions.ConfigureWorkspaceAction;
-import com.chrisbartley.idea.workspaces.actions.RemoveWorkspaceAction;
-import com.chrisbartley.idea.workspaces.actions.ToggleWorkspaceOpennessAction;
-import com.chrisbartley.idea.workspaces.actions.ToggleWorkspacePinAction;
+import com.chrisbartley.idea.workspaces.actions.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.fileEditor.FileEditorManager;
@@ -499,6 +495,18 @@ public final class WorkspaceManager implements ProjectComponent, JDOMExternaliza
 
       return actions;
       }
+
+    public List getAddCurrentEditorActions()
+       {
+       // build and return the list of actions
+       final List actions = new ArrayList();
+       for (final ListIterator listIterator = workspacesModel.listIterator(); listIterator.hasNext();)
+          {
+          actions.add(new AddCurrentEditorToWorkspaceAction((Workspace)listIterator.next()));
+          }
+
+       return actions;
+       }
 
    public List getToggleWorkspacePinActions()
       {

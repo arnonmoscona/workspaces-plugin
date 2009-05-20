@@ -41,6 +41,8 @@ public final class Icons
    public static final Icon PINNED_AND_OPEN = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/pinnedAndOpen.png"));
    public static final Icon PINNED_AND_PARTIALLY_OPEN = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/pinnedAndPartiallyOpen.png"));
 
+    public static final Icon ADD_CURR_FILE = new ImageIcon(Icons.class.getResource("/com/chrisbartley/idea/workspaces/icons/addFile.png"));
+
    /** Prevent instantiation */
    private Icons()
       {

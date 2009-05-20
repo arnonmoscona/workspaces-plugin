@@ -5,8 +5,8 @@
    <!-- Initialization                                                                           -->
    <!-- ======================================================================================== -->
    <property name="name" value="Workspaces"/>
-   <property name="version" value="0.13"/>
-   <property name="idea.home" value="c:\idea"/>
+   <property name="version" value="0.14"/>
+   <property name="idea.home" value="c:\IntelliJ"/>
    <property name="output.dir" value="output"/>
    <property name="dist.dir" value="dist"/>
    <property name="javadoc.dir" value="${dist.dir}/docs/api"/>
@@ -19,6 +19,7 @@
       <fileset dir="${idea.home}/lib">
          <include name="idea.jar" />
          <include name="jdom.jar" />
+          <include name="openapi.jar" />
       </fileset>
    </path>
 
@@ -78,6 +79,7 @@
    <!-- Creates the jar file                                                                     -->
    <!-- ======================================================================================== -->
    <target name="build" depends="clean,jar" description="Compiles the source code and creates the jar file"/>
+
 
    <!-- ======================================================================================== -->
    <!-- Creates the distribution                                                                 -->

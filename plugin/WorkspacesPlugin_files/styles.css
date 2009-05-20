@@ -1,0 +1,14 @@
+body{margin-left: 0pt; margin-top: 0pt; background-color: #ffffff; link-color:#003366; vlink-color: #336699; alink-color: #336699;
+}
+font{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+input{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+a {font-family:Verdana, Arial, Helvetica, sans-serif;}
+.bottomMenu{FONT-SIZE:11px; FONT-WEIGHT: bold; COLOR: #663300; text-decoration: none;}
+.topMenu{FONT-SIZE:11px; FONT-WEIGHT: bold; COLOR: #ffffff; text-decoration: none;}
+.pageHeader{FONT-SIZE:15px; FONT-WEIGHT: bold; COLOR: #663300; text-decoration: none;} 
+.headerFont{FONT-SIZE:12px; FONT-WEIGHT: bold; COLOR: #663300; text-decoration: none;}
+.bigFont{FONT-SIZE:13px; FONT-WEIGHT: bold; COLOR: #663300;}
+.copyRightBlack{FONT-SIZE:10px; FONT-WEIGHT: bold; COLOR: #000000; text-decoration: none;}
+.copyRightWhite{FONT-SIZE:9px; FONT-WEIGHT: bold; COLOR: #ffffff; text-decoration: none;}
+.listFont{FONT-SIZE:11px; COLOR: #000000; text-decoration: none;}
+.goInput{width:132px;}

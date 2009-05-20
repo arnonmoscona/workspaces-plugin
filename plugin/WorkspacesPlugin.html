@@ -1,0 +1,506 @@
+<html><head>
+<title> IntelliJ Community . WorkspacesPlugin </title><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><!-- base href="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin" --><link rel="Shortcut Icon" href="http://www.intellij.org/favicon.ico" type="image/x-icon"><link rel="stylesheet" type="text/css" href="WorkspacesPlugin_files/styles.css"></head><body leftmargin="0" rightmargin="0" topmargin="0" alink="#996633" bgcolor="#ffffff" link="#663300" marginheight="0" marginwidth="0" vlink="#996633"><header>
+ 
+   
+  
+ 
+ 
+</header>
+
+<p>
+<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+    <tbody><tr>
+        <td height="120" valign="top">
+<!-- <code><b>======</b></code> HEADER MODUL <code><b>======</b></code> -->
+            <table border="0" cellpadding="0" cellspacing="0" height="115" width="100%">
+                <tbody><tr>
+                    <td background="WorkspacesPlugin_files/mainHeader.gif" width="244">
+                    </td>
+                    <td background="WorkspacesPlugin_files/headerBg.gif">&nbsp;
+                    </td>
+                    <td align="right" background="WorkspacesPlugin_files/menuBg.gif" valign="top" width="528">
+                        <table border="0" cellpadding="1" cellspacing="0" height="100%" width="100%">
+                            <tbody><tr>
+                                <td align="right" height="30" valign="center">
+                                    <font class="pageHeader">WorkspacesPlugin&nbsp;</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" valign="bottom">
+                                    <p>
+                                            </p><p>
+                                            </p><p>
+                                            </p><p>
+                                            </p><p>
+                                            </p><table border="0" cellpadding="0" cellspacing="0" height="28" width="90%">
+                                        <tbody><tr>
+                                            <td align="right" valign="center" width="20%">
+                                                <a href="http://www.intellij.org/twiki/bin/view/Main/WebHome" class="topMenu">HOME</a>
+                                            </td>
+<td align="right" valign="center" width="20%">
+                                                <a href="http://www.intellij.org/twiki/bin/view/Main/WebIndex" class="topMenu">INDEX</a>
+                                            </td>
+<td align="right" valign="center" width="24%">
+                                                <a href="http://www.intellij.org/twiki/bin/view/Main/WebSearch" class="topMenu">SEARCH</a>
+                                            </td>
+<td align="right" valign="center" width="24%">
+                                                <a href="http://www.intellij.org/twiki/bin/view/Main/WebChanges" class="topMenu">CHANGES</a>
+                                            </td>
+<td align="right" valign="center" width="20%">
+                                                <font class="topMenu">GO&nbsp;&nbsp;</font>
+                                            </td>
+<form name="main" action="/twiki/bin/view/Main/ t"></form>
+                     <td align="right" height="25" valign="center" width="100">
+                                                <input class="goInput" name="topic" type="text">
+                                              </td>
+                                            
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+            </tbody></table>
+<!-- <code><b>=======================</b></code>  -->
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">
+<!-- <code><b>=====</b></code> CONTENT MODUL <code><b>======</b></code> -->
+            <table border="0" cellpadding="0" cellspacing="15" height="100%" width="100%">
+                <tbody><tr>
+                    <td valign="top">
+<font>
+</font><h3><font><a name="Introduction"> Introduction </a></font></h3>
+<p>
+<font>This plugin enables you to create and manage named groups of
+files, or "workspaces", within a project. You can bind a name to a set
+of one or more files and then open/close that set of files as a group.
+You can create as many workspaces as you want and arrange them in the
+Workspaces tool window in any order you like.
+</font></p><p>
+<font>This plugin was tested with <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJ">IntelliJ</a> IDEA Build 1050 on Windows 2000.
+</font></p><p>
+</p><h3><font><a name="How_to_Use_Workspaces"> How to Use Workspaces </a></font></h3>
+<p>
+<font>All interaction with and management of workspaces is performed
+via the "Workspaces" tool window and/or the "Workspaces" menu in the
+main menu.
+</font></p><p>
+<font>In the Workspaces tool window, you should see icons for opening,
+closing, creating, removing, rearranging, and configuring workspaces.
+Open workspaces are marked with a black check. Partially open
+workspaces are marked with a grey check. The number of files open and
+the number of files bound to each workspace is shown on the right (e.g.
+[ 2 / 3 ] means 2 of the 3 files belonging to that workspace are
+currently open). Workspaces which contain the currently selected file
+are marked with a green circle.
+</font></p><p>
+<font>In the Workspaces menu, you should see all workspaces you have
+created and the menu items "Close All Workspaces", "Close All
+Non-Workspace Files", and "Create New From Open Files...". Open and
+partially-open workspaces will be marked with a black or grey check as
+appropriate.
+</font></p><p>
+</p><p>
+</p><h3><font><a name="Acknowledgement"> Acknowledgement </a></font></h3>
+<p>
+<font>Thanks to <a href="http://www.intellij.org/twiki/bin/view/Main/JonSteelman">JonSteelman</a>
+for the original idea. I asked a question on the
+jetbrains.intellij.eap.features newsgroup about whether there'd be any
+interest in being able to lock editor tabs to prevent them from being
+closed (because i often found myself with a bunch of unrelated files
+open and just wanted to get back to the task at hand). Jon mentioned
+his workspace idea as an alternative, and I was sold instantly. After
+some thinking, i realized that it could be implemented with a plugin
+(mostly...i don't know of any way to restrict searches to arbitrary
+files) and here you have it... <img alt="smile" src="WorkspacesPlugin_files/smile.gif">
+</font></p><p>
+</p><h3><font><a name="Known_Issues"> Known Issues </a></font></h3>
+<p>
+</p><ul>
+<font><li> When a workspace is renamed, the name at the top level of
+the workspaces menu does not change until the project is reopened (but
+the name in submenus is changed). (<a href="http://www.intellij.org/twiki/bin/view/Main/ErbC">ErbC</a>)
+</li>
+<li> In "Create a New Workspace" and "Workspace Properties" dialogs,
+Create/OK button should be disabled if no files are checked (can't have
+an empty workspace). What's the proper way to do this with Swing?
+</li>
+<li> Current scheme of refreshing lists (RefreshableListModel) and
+especially the workspace window (RefreshListModelActionGroup) seems
+like a big ugly hack. What's the proper way to do this? I'd like some
+sort of listener that fires upon opening/closing files, but don't know
+of one. FileEditorManagerListener isn't good enough since files can be
+closed without being selected.
+</li>
+<li> Current scheme of computing open file counts is pretty inefficient.
+</li>
+<li> Use of IncludableItem seems a bit hokey.  Is there a better Swing-ish way to do it?
+</li>
+<li> CreateWorkspaceDialog and ConfigureWorkspaceDialog should be refactored (they're pretty much identical)
+</li>
+<li> Needs javadocs
+</li>
+<li> <a href="http://www.intellij.org/twiki/bin/view/Main/NullPointerException">NullPointerException</a> thrown if you've deleted one of the workspace files from your project, then try to open the workspace. (<a href="http://www.intellij.org/twiki/bin/view/Main/ToddBreiholz">ToddBreiholz</a>)
+</li>
+</font></ul>
+<p>
+</p><h3><font><a name="To_Do"> To Do </a></font></h3>
+<p>
+</p><ul>
+<font><li> Make Include/Exclude icons clearer.
+</li>
+<li> Don't allow workspaces with duplicate names.  Perhaps prompt to replace the existing one.
+</li>
+<li> Handle moved/deleted/renamed files which belong to one or more workspaces.
+</li>
+<li> Consider implementing an action which is similar to "Close All
+Workspaces Except" but would also close all non-workspaced files
+(basically a shortcut for doing "Close All Workspaces Except" followed
+by "Close All Non-Workspace Files"). I'm not sure what to call this,
+though. Possibly "Close All Except", but that might be confusing.
+Suggestions are welcome! <img alt="big grin" src="WorkspacesPlugin_files/biggrin.gif">
+</li>
+<li> Provide docs on pinning (especially the subtle problems that arise
+when pinning/unpinning upon implicit open/close is activated).
+</li>
+<li> Allow creation of a workspace from project/source/classpath pane's right-click menu
+</li>
+<li> Allow addition of file(s) to an existing workspace via right-click menu option in project, source, and editor context menus
+</li>
+<li> Provide "Add Open Files" option in Workspaces menu and in tool window's right-click menu
+</li>
+<li> See if editor tab context menu is customizable to add "Close all workspaced files" and "Close all non-workspaced files".
+</li>
+<li> Internationalize
+</li>
+</font></ul>
+<p>
+</p><p>
+</p><h3><font><a name="Feature_Requests"> Feature Requests </a></font></h3>
+<p>
+</p><ul>
+<font><li> Create a New Workspace dialog should suggest a name for the
+workspace by analysing the class names or package names of the files.
+Examples: If all the class names start with "Foo" then suggest "Foo"
+(compared on a captialised word basis). If all the classes are in the
+com.foo.bar package then suggest "Bar". (<a href="http://www.intellij.org/twiki/bin/view/Main/GordonTyler">GordonTyler</a>)
+</li>
+<li> Feature Request: Assign a shortcut to a workspace like you can
+with Ant targets. I'm not sure whether the shortcut should toggle the
+workspace or just open all files of that workspace. What do you think? (<a href="http://www.intellij.org/twiki/bin/view/Main/GordonTyler">GordonTyler</a>)
+</li>
+<li> Perhaps the checkmark next to each workspace should be clickable by the user to toggle that workspace? (<a href="http://www.intellij.org/twiki/bin/view/Main/GordonTyler">GordonTyler</a>)
+</li>
+<li> As the pinning is not "Close All" resistant, I think it would make
+sense to add a "Close all non-workspace BUT current editor" that would
+work mostly like "Close all but current editor". (<a href="http://www.intellij.org/twiki/bin/view/Main/AlainRavet">AlainRavet</a>)
+</li>
+<li> A button/menu item to update a workspace's list of files to the
+currently open set. Sort of like a "recreate workspace from open
+files". (<a href="http://www.intellij.org/twiki/bin/view/Main/GordonTyler">GordonTyler</a>)
+</li>
+<li> I at least need the Workspace panel to show me what files are part
+of each Workspace. For example, a Workspace may contain 15 files. I am
+only working on three of those files. I should not have to open all 15
+files (which this plug-in does). Sure, I can close the other 12, but
+what if I later need to edit a file in these 12? How do I quickly bring
+it back up without having to reopen all 15 files again? (<a href="http://www.intellij.org/twiki/bin/view/Main/BenWong">BenWong</a>)
+</li>
+</font></ul>
+<p>
+</p><h3><font><a name="Version_History"> Version History </a></font></h3>
+<p>
+</p><p>
+</p><h5><font><a name="v_0_14_Sep_16_2004_"> v 0.14 (Sep 16 2004) </a></font></h5>
+<p>
+</p><ul>
+<font><li> Added a toolbar button on the Workspace tool window to allow adding the active editor file to the workspace. -- <a href="http://www.intellij.org/twiki/bin/view/Main/JohnDeLello">JohnDeLello</a> - 16 Sep 2004
+</li>
+<li> Added menu item to Workspaces Main Menu to allow adding active editor file to specfic workspace. -- <a href="http://www.intellij.org/twiki/bin/view/Main/JohnDeLello">JohnDeLello</a> - 16 Sep 2004
+</li>
+<li> Added Workspace menu to the editor right-click menu. -- <a href="http://www.intellij.org/twiki/bin/view/Main/JohnDeLello">JohnDeLello</a> - 16 Sep 2004
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_13_Dec_31_2003_"> v 0.13 (Dec 31 2003) </a></font></h5>
+<ul>
+<font><li> Migrated to 1050's API -- <a href="http://www.intellij.org/twiki/bin/view/Main/VinceMallet">VinceMallet</a>
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_12_Nov_07_2003_"> v 0.12 (Nov 07 2003) </a></font></h5>
+<ul>
+<font><li> Workspaces menu is now accessible via ALT-K.
+</li>
+<li> When creating a workspace containing only one file, the default workspace name now no longer includes the extension.
+</li>
+<li> Updated plugin.xml file
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_11_Oct_29_2003_"> v 0.11 (Oct 29 2003) </a></font></h5>
+<ul>
+<font><li> converted for 957 API -- <a href="http://www.intellij.org/twiki/bin/view/Main/VinceMallet">VinceMallet</a> - 30 Oct 2003
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_10_Sept_24_2003_"> v 0.10 (Sept 24 2003) </a></font></h5>
+<ul>
+<font><li> converted for 929 API
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_9_Nov_05_2002_"> v 0.9 (Nov 05 2002) </a></font></h5>
+<p>
+</p><ul>
+<font><li> Workspaces tool window enhancements:
+<ul>
+<li> Double-clicking a workspace now opens the workspace.
+</li>
+<li> Right-clicking displays a popup menu.
+</li>
+<li> Option in global prefs to show/hide the Open, Close, Toggle Pin,
+and Properties actions in the popup menu (since they're available via
+the tool window's buttons, I prefer not to see them in the popup menu,
+but my preference might not be all that popular).
+</li>
+<li> When selecting items in the Workspaces tool window, the entire row is selected now (instead of just the workspace name).
+</li>
+<li> Counts in the Workspaces tool window are now black (instead of blue).
+</li>
+</ul>
+</li>
+<li> Workspaces menu enhancements:
+<ul>
+<li> Addition of "Close All Workspaces Except" action (provides a submenu to choose the workspace)
+</li>
+<li> Addition of "Toggle Pin" action (provides a submenu to choose the workspace to toggle)
+</li>
+<li> Addition of "Properties" action (provides a submenu to choose the workspace to configure)
+</li>
+<li> Addition of "Remove" action (provides a submenu to choose the workspace to remove)
+</li>
+<li> Performing a "Remove" via the menu doesn't interfere with the selection of workspaces in the tool window.
+</li>
+</ul>
+</li>
+<li> Option in global prefs to automatically pin workspaces when created.
+</li>
+<li> In "Create a New Workspace" and "Workspace Properties" dialogs, the "Workspace Name" text field has default focus.
+</li>
+<li> Global preferences are now persisted in
+[CONFIG_HOME]/options/workspaces.xml. This may cause you to lose your
+current settings. Sorry.
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_8_3_Oct_29_2002_"> v 0.8.3 (Oct 29 2002) </a></font></h5>
+<p>
+</p><ul>
+<font><li> Updated to work with Open API changes introduced in IDEA build 664.
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_8_2_Oct_18_2002_"> v 0.8.2 (Oct 18 2002) </a></font></h5>
+<p>
+</p><ul>
+<font><li> Added global options for pinning/unpinning of workspaces upon implicit open/close.
+</li>
+<li> Added global option for Workspaces menu UI to specify what happens
+when an unpinned, open (i.e. marked with a black check) workspace is
+selected. You can choose to either have the workspace pinned or closed.
+</li>
+<li> Menu option "Close All Workspaces" is now only enabled if at least one workspace exists.
+</li>
+<li> Menu option "Close All Non-Workspace File" is now only enabled if one or more non-workspaced files are open.
+</li>
+<li> Removed file closing prevention introduced in 0.8 (since pinning does the same thing and is more powerful).
+</li>
+<li> Fixed a (recently introduced) bug in the workspace creation and
+configuration dialogs where excluded files were marked with a grey
+check instead of no check.
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_8_1_Oct_16_2002_"> v 0.8.1 (Oct 16 2002) </a></font></h5>
+<p>
+</p><ul>
+<font><li> Added ability to "pin" and "unpin" a workspace to prevent
+its open files from being closed when another workspace is (explicitly)
+closed. (This is more or less a test to see whether this is more
+intuitive than the file closing prevention scheme introduced in 0.8)
+</li>
+<li> No longer inlcuding generated Javadocs with the distribution since
+it nearly doubles the size. If you want the generated Javadocs, just
+run the Ant task.
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_8_15_Oct_2002_"> v 0.8 (15 Oct 2002) </a></font></h5>
+<p>
+</p><ul>
+<font><li> Global preferences panel (in IDE Settings)
+</li>
+<li> Option to not close files belonging to other open workspaces (configurable in preferences panel)
+</li>
+<li> Workspaces now accessible via tool window and/or menu (configurable in preferences panel)
+</li>
+<li> "Close All Workspaces" action (currently only available in Workspaces menu)
+</li>
+<li> "Close All Non-Workspace Files" action (currently only available in Workspaces menu)
+</li>
+<li> When creating a workspace containing only one file, the workspace
+name defaults to the name of the file (instead of "Untitled").
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_7_11_Oct_2002_"> v 0.7 (11 Oct 2002) </a></font></h5>
+<p>
+</p><ul>
+<font><li> New UI (tool window instead of menu)
+</li>
+<li> Renaming of workspaces
+</li>
+<li> Removal of files from existing workspaces
+</li>
+<li> Rearrangement of files in existing workspaces
+</li>
+<li> Rearrangement buttons now work with multi-select
+</li>
+<li> Open/close/remove multiple workspaces
+</li>
+<li> Confirmation dialog for remove
+</li>
+<li> Not backwards compatible with previous versions (sorry).
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_6_1_26_Sept_2002_"> v 0.6.1 (26 Sept 2002) </a></font></h5>
+<p>
+</p><ul>
+<font><li> Fixed to work with IDEA Build 650's Open API.  Will not work with previous versions.
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_6_25_Sept_2002_"> v 0.6 (25 Sept 2002) </a></font></h5>
+<ul>
+<font><li> Renamed jar file (changed from "WorkspacesPlugin.jar" to "Workspaces.jar")
+</li>
+<li> Files are opened in the order they are stored in the workspace.  The first file is selected upon reopening the workspace.
+</li>
+<li> Refactored
+</li>
+</font></ul>
+<p>
+</p><h5><font><a name="v_0_5_25_Sept_2002_"> v 0.5 (25 Sept 2002) </a></font></h5>
+<p>
+</p><ul>
+<font><li> Preview release to get feedback on usability and desired features.  No source available yet.
+</li>
+</font></ul>
+<p>
+</p><p>
+<table border="1" cellpadding="0" cellspacing="0">
+   <tbody><tr><th colspan="2" align="center" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJPluginWebForm">IntelliJPluginWebForm</a> </th></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJPluginName">IntelliJPluginName</a>:</th><td align="left"> Workspaces </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJPluginVersion">IntelliJPluginVersion</a>:</th><td align="left"> 0.14 </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJPluginVendor">IntelliJPluginVendor</a>:</th><td align="left"> Chris Bartley </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJPluginBinary">IntelliJPluginBinary</a>:</th><td align="left">  </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJPluginSource">IntelliJPluginSource</a>:</th><td align="left">  </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJPluginClassification">IntelliJPluginClassification</a>:</th><td align="left"> <a href="http://www.intellij.org/twiki/bin/view/Main/LookAndFeel">LookAndFeel</a> </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/TopicClassification">TopicClassification</a>:</th><td align="left"> <a href="http://www.intellij.org/twiki/bin/view/Main/IntelliJPluginPackage">IntelliJPluginPackage</a> </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/TopicShortDescription">TopicShortDescription</a>:</th><td align="left"> This plugin enables you to create and manage named groups of files, or "workspaces", within a project </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/TestedOnOS">TestedOnOS</a>:</th><td align="left"> <a href="http://www.intellij.org/twiki/bin/view/Main/OsWin2K">OsWin2K</a>, <a href="http://www.intellij.org/twiki/bin/view/Main/OsWinXP">OsWinXP</a> </td></tr>
+<tr><th align="right" bgcolor="#99cccc"> <a href="http://www.intellij.org/twiki/bin/view/Main/ShouldRunOnOS">ShouldRunOnOS</a>:</th><td align="left"> <a href="http://www.intellij.org/twiki/bin/view/Main/AnyOS">AnyOS</a> </td></tr>
+</tbody></table>
+</p><p>
+<table border="1" cellpadding="0" cellspacing="1">
+<tbody><tr><th align="center" bgcolor="#99cccc"><a href="http://www.intellij.org/twiki/bin/view/TWiki/FileAttachment">Attachment</a>: <a href="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin?sortcol=0&amp;table=1&amp;up=0#sorted_table" title="Sort by this column"><img src="WorkspacesPlugin_files/diamond.gif" alt="sort" border="0"></a></th><th align="center" bgcolor="#99cccc"><a href="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin?sortcol=1&amp;table=1&amp;up=0#sorted_table" title="Sort by this column"> Action:</a> </th><th align="center" bgcolor="#99cccc"><a href="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin?sortcol=2&amp;table=1&amp;up=0#sorted_table" title="Sort by this column"> Size:</a> </th><th align="center" bgcolor="#99cccc"><a href="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin?sortcol=3&amp;table=1&amp;up=0#sorted_table" title="Sort by this column"> Date:</a> </th><th align="center" bgcolor="#99cccc"><a href="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin?sortcol=4&amp;table=1&amp;up=0#sorted_table" title="Sort by this column"> Who:</a> </th><th align="center" bgcolor="#99cccc"><a href="http://www.intellij.org/twiki/bin/view/Main/WorkspacesPlugin?sortcol=5&amp;table=1&amp;up=0#sorted_table" title="Sort by this column"> Comment:</a> </th></tr>
+<tr><td bgcolor="#ffffff"> <img src="WorkspacesPlugin_files/zip.gif" hight="16" align="top" width="16"> <a href="http://www.intellij.org/twiki/pub/Main/WorkspacesPlugin/Workspaces-0.9.zip">Workspaces-0.9.zip</a> </td><td bgcolor="#ffffff"> <a href="http://www.intellij.org/twiki/bin/attach/Main/WorkspacesPlugin?filename=Workspaces-0.9.zip&amp;revInfo=1">action</a> </td><td bgcolor="#ffffff"> 145108 </td><td bgcolor="#ffffff"> 06 Nov 2002 - 00:17 </td><td bgcolor="#ffffff"> <a href="http://www.intellij.org/twiki/bin/view/Main/ChrisBartley">ChrisBartley</a> </td><td bgcolor="#ffffff"> v 0.9 </td></tr>
+<tr><td bgcolor="#ffffcc"> <img src="WorkspacesPlugin_files/zip.gif" hight="16" align="top" width="16"> <a href="http://www.intellij.org/twiki/pub/Main/WorkspacesPlugin/workspaces-0.13.zip">workspaces-0.13.zip</a> </td><td bgcolor="#ffffcc"> <a href="http://www.intellij.org/twiki/bin/attach/Main/WorkspacesPlugin?filename=workspaces-0.13.zip&amp;revInfo=1">action</a> </td><td bgcolor="#ffffcc"> 151467 </td><td bgcolor="#ffffcc"> 31 Dec 2003 - 18:34 </td><td bgcolor="#ffffcc"> <a href="http://www.intellij.org/twiki/bin/view/Main/VinceMallet">VinceMallet</a> </td><td bgcolor="#ffffcc"> v 0.13 for Aurora 1050 (src + bin) </td></tr>
+<tr><td bgcolor="#ffffff"> <img src="WorkspacesPlugin_files/zip.gif" hight="16" align="top" width="16"> <a href="http://www.intellij.org/twiki/pub/Main/WorkspacesPlugin/workspaces-0.14.zip">workspaces-0.14.zip</a> </td><td bgcolor="#ffffff"> <a href="http://www.intellij.org/twiki/bin/attach/Main/WorkspacesPlugin?filename=workspaces-0.14.zip&amp;revInfo=1">action</a> </td><td bgcolor="#ffffff"> 160157 </td><td bgcolor="#ffffff"> 16 Sep 2004 - 19:26 </td><td bgcolor="#ffffff"> <a href="http://www.intellij.org/twiki/bin/view/Main/JohnDeLello">JohnDeLello</a> </td><td bgcolor="#ffffff"> v 0.14 </td></tr>
+</tbody></table>
+</p><p>
+<font></font>
+          </p></td>
+                </tr>
+            </tbody></table>
+<!-- <code><b>================================</b></code>  -->
+        </td>
+    </tr>
+    <tr>
+        <td height="90">
+<!-- <code><b>=====</b></code> BOTTOM MENU MODUL <code><b>=====</b></code>  -->
+            <table valign="bottom" background="WorkspacesPlugin_files/bottomBg.gif" border="0" cellpadding="0" cellspacing="0" height="82" width="100%">
+                <tbody><tr>
+                    <td valign="top" width="100%">
+                        <p>
+</p><p>
+                                </p><p>
+                            </p><table border="0" cellpadding="0" cellspacing="0" width="350">
+                            <tbody><tr>
+                                <td align="center" valign="center">
+                                    <img src="WorkspacesPlugin_files/marker.gif">
+                                </td>
+                                <td align="center" nowrap="nowrap" valign="center">
+                                    <a href="http://www.intellij.org/twiki/bin/edit/Main/WorkspacesPlugin" class="bottomMenu">e d i t</a>
+                                </td>
+                                <td align="center" valign="center">
+                                    <img src="WorkspacesPlugin_files/marker.gif">
+                                </td>
+                                <td align="center" nowrap="nowrap" valign="center">
+                                    <a href="http://www.intellij.org/twiki/bin/attach/Main/WorkspacesPlugin" class="bottomMenu">a t t a c h</a>
+                                </td>
+                                <td align="center" valign="center">
+                                    <img src="WorkspacesPlugin_files/marker.gif">
+                                </td>
+                                <td align="center" nowrap="nowrap" valign="center">
+                                    <a href="http://www.intellij.org/twiki/bin/search/Main/SearchResult?scope=text&amp;regex=on&amp;search=Workspaces%20*Plugin%5B%5EA-Za-z%5D" class="bottomMenu">r e f - b y</a>
+                                </td>
+<!--                                
+                                <td valign="center" align="center">
+                                    <img src="/images/marker.gif">
+                                </td>
+            <td valign="center" align="center" nowrap>
+                                    <a href="/twiki/bin/view/Main/WorkspacesPlugin?skin=print" class="bottomMenu">p r i n t a b l e</a>
+                                </td>
+-->
+                                <td align="center" valign="center">
+                                    <img src="WorkspacesPlugin_files/marker.gif">
+                                </td>
+                                <td align="center" nowrap="nowrap" valign="center">
+                                    <a href="http://www.intellij.org/twiki/bin/rdiff/Main/WorkspacesPlugin" class="bottomMenu">d i f f s</a>
+                                </td>
+<td align="center" valign="center">
+                                    <img src="WorkspacesPlugin_files/marker.gif">
+                                </td>
+                                <td align="center" nowrap="nowrap" valign="center">
+                                    <a href="http://www.intellij.org/twiki/bin/oops/Main/WorkspacesPlugin?template=oopsmore&amp;param1=1.32&amp;param2=1.32" class="bottomMenu">m o r e</a>
+                                </td>
+</tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="bottom">
+                        <table border="0" cellpadding="0" cellspacing="5">
+                            <tbody><tr>
+                                <td align="right">
+                                    <font class="copyRightBlack">Have ideas, requests, problems regarding this site?</font>
+                                    <a href="mailto:twikiadmin@intellij.org?subject=TWiki%20Feedback" class="copyRightWhite">Send</a><font class="copyRightBlack"> feedback.</font><br>
+                                    <font class="copyRightWhite">Copyright © 2000-2003 by the contributing authors. All materials at intellij.org are the property of the contributing authors.</font>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+            </tbody></table>
+<!-- <code><b>==============================</b></code> -->
+        </td>
+    </tr>
+</tbody></table>
+</p><p>
+</p></body></html>
