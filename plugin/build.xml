@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="Workspaces" default="build" basedir=".">
+   <!-- ======================================================================================== -->
+   <!-- Initialization                                                                           -->
+   <!-- ======================================================================================== -->
+   <property name="name" value="Workspaces"/>
+   <property name="version" value="0.9"/>
+   <property name="idea.home" value="c:\idea"/>
+   <property name="output.dir" value="output"/>
+   <property name="dist.dir" value="dist"/>
+   <property name="javadoc.dir" value="${dist.dir}/docs/api"/>
+   <property name="src.dir" value="src"/>
+
+   <!-- ======================================================================================== -->
+   <!-- Define class path                                                                        -->
+   <!-- ======================================================================================== -->
+   <path id="core.class.path">
+      <fileset dir="${idea.home}/lib">
+         <include name="idea.jar" />
+         <include name="jdom.jar" />
+      </fileset>
+   </path>
+
+   <!-- ======================================================================================== -->
+   <!-- Compiles the source code                                                                 -->
+   <!-- ======================================================================================== -->
+   <target name="compile">
+      <delete dir="${output.dir}"/>
+      <mkdir dir="${output.dir}"/>
+      <javac
+         srcdir="${src.dir}"
+         destdir="${output.dir}"
+         debug="on"
+         deprecation="on"
+         optimize="off"
+         includeAntRuntime="no"
+         classpathref="core.class.path" />
+   </target>
+
+   <!-- ======================================================================================== -->
+   <!-- Creates the jar file                                                                     -->
+   <!-- ======================================================================================== -->
+   <target name="jar" depends="compile">
+      <copy todir="${output.dir}/META-INF">
+         <fileset dir="META-INF"/>
+      </copy>
+      <replace dir="${output.dir}/META-INF" includes="**/*.xml">
+         <replacefilter token="@NAME@" value="${name}"/>
+         <replacefilter token="@VERSION@" value="${version}"/>
+      </replace>
+
+      <!-- copy icons and such -->
+      <copy todir="${output.dir}">
+         <fileset dir="src" excludes="**/*.java"/>
+      </copy>
+
+      <copy todir="${output.dir}/META-INF" file="./README.txt" />
+      <jar jarfile="${output.dir}/${name}.jar" basedir="${output.dir}" excludes="${name}.jar"/>
+   </target>
+
+   <!-- ======================================================================================== -->
+   <!-- Creates the API documentation                                                            -->
+   <!-- ======================================================================================== -->
+   <target name="javadoc">
+      <delete dir="${javadoc.dir}"/>
+      <javadoc packagenames="com.*"
+         sourcepath="${src.dir}"
+         destdir="${javadoc.dir}"
+         author="true"
+         version="true"
+         windowtitle="${name} v ${version} API"
+         doctitle="${name}"
+         classpathref="core.class.path"/>
+   </target>
+
+   <!-- ======================================================================================== -->
+   <!-- Creates the jar file                                                                     -->
+   <!-- ======================================================================================== -->
+   <target name="build" depends="clean,jar" description="Compiles the source code and creates the jar file"/>
+
+   <!-- ======================================================================================== -->
+   <!-- Creates the distribution                                                                 -->
+   <!-- ======================================================================================== -->
+   <target name="dist" depends="build" description="Creates the distribution">
+      <copy todir="${dist.dir}/src">
+         <fileset dir="${src.dir}"/>
+      </copy>
+      <copy todir="${dist.dir}/META-INF">
+         <fileset dir="META-INF"/>
+      </copy>
+      <replace dir="${dist.dir}/META-INF" includes="**/*.xml">
+         <replacefilter token="@NAME@" value="${name}"/>
+         <replacefilter token="@VERSION@" value="${version}"/>
+      </replace>
+
+      <copy file="build.xml" todir="${dist.dir}"/>
+      <copy file="README.txt" todir="${dist.dir}"/>
+      <copy file="${output.dir}/${name}.jar" todir="${dist.dir}"/>
+
+      <!-- create the zipped distribution -->
+      <zip zipfile="./${name}-${version}.zip" basedir="${dist.dir}" includes="**"/>
+   </target>
+
+   <!-- ======================================================================================== -->
+   <!-- Cleans up generated stuff                                                                -->
+   <!-- ======================================================================================== -->
+   <target name="clean" description="Removes the output directory">
+      <delete dir="${output.dir}"/>
+      <delete dir="${dist.dir}"/>
+      <delete file="./${name}-${version}.zip"/>
+   </target>
+</project>
